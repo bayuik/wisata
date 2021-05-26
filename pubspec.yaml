@@ -26,6 +26,6 @@ flutter:
     - images/
 
   fonts:
-    - family: Poppins
+    - family: Montserrat
       fonts:
-        - asset: fonts/Poppins-Regular.ttf
+        - asset: fonts/Montserrat-Regular.ttf

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
-  TextStyle titleStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30, fontFamily: 'Poppins');
+  TextStyle titleStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30, fontFamily: 'Montserrat');
   TextStyle detailStyle = TextStyle(fontSize: 16);
 
   @override

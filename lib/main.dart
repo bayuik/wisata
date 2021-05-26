@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'detail_page.dart';
+import 'main_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tempat Wisata Bali',
-      home: DetailPage(),
+      home: MainPage(),
     );
   }
 }
