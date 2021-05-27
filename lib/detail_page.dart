@@ -1,95 +1,151 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package/tourism_place.dart';
+
+var informationTextStyle = TextStyle(fontFamily: 'Oxygen');
 
 class DetailPage extends StatelessWidget {
-  TextStyle titleStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 30, fontFamily: 'Montserrat');
-  TextStyle detailStyle = TextStyle(fontSize: 16);
+  final TourismPlace place;
+
+  DetailPage({@required this.place});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image.asset('images/ubud.jpg'),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Ubud',
-                  style: titleStyle,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Image.asset(place.imageAsset),
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                        FavoriteButton(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 16.0),
+              child: Text(
+                place.name,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontFamily: 'Staatliches',
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Column(
                     children: <Widget>[
                       Icon(Icons.calendar_today),
-                      Text('Open Everyday')
+                      SizedBox(height: 8.0),
+                      Text(
+                        place.openDays,
+                        style: informationTextStyle,
+                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
                       Icon(Icons.access_time),
-                      Text('08.00-21.00'),
+                      SizedBox(height: 8.0),
+                      Text(
+                        place.openTime,
+                        style: informationTextStyle,
+                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
                       Icon(Icons.monetization_on),
-                      Text('Rp. 25.000'),
+                      SizedBox(height: 8.0),
+                      Text(
+                        place.ticketPrice,
+                        style: informationTextStyle,
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Ubud, terletak di bagian tengah pulau Bali, Indonesia, dikenal sebagai pusat tarian dan kerajinan tradisional. Hutan hujan dan terasering padi yang mengelilingi kawasan Ubud, ditambah pura dan tempat pemujaan, merupakan salah satu lanskap Bali yang paling terkenal. Terdapat situs suci kuno, yaitu Goa Gajah yang memiliki ukiran serba mendetail dan Gunung Kawi, yaitu tempat pemujaan yang diukir dari batu.',
-                  style: detailStyle,
-                  textAlign: TextAlign.center,
+            ),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                place.description,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontFamily: 'Oxygen',
                 ),
               ),
-              Container(
-                height: 150,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        child: Image.asset(
-                          'images/tanahlot.jpg',
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+            ),
+            Container(
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: place.imageUrls.map((url) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(url),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        child: Image.asset(
-                          'images/kuta.jpg',
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        child: Image.asset(
-                          'images/pandawa.jpg',
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.red,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
     );
   }
 }
