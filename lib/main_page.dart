@@ -6,8 +6,10 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xffe4efe7),
         appBar: AppBar(
           title: Text('Wisata Bali'),
+          backgroundColor: Color(0xff00ead3),
         ),
         body: ListView.builder(
           itemBuilder: (context, index) {
@@ -15,16 +17,26 @@ class MainPage extends StatelessWidget {
             return InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return DetailPage(place: place,);
+                  return DetailPage(
+                    place: place,
+                  );
                 }));
               },
               child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                color: Color(0xfffff5b7),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Expanded(
                       flex: 1,
-                      child: Image.asset(place.imageAsset),
+                      child: ClipRRect(
+                        child: Image.asset(place.imageAsset),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10)),
+                      ),
                     ),
                     Expanded(
                       flex: 2,
